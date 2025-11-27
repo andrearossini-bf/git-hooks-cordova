@@ -71,7 +71,7 @@ git clone <repo-cliente>
 cd <repo-cliente>
 ```
 
-### 2. Scaricare i hook
+### 2. Scaricare gli hook
 
 ```bash
 mkdir -p tools
@@ -92,6 +92,16 @@ python tools/git-hooks-cordova/setup_hooks.py
 ```
 
 A questo punto Git userà i file pre-commit / commit-msg contenuti in tools/git-hooks-cordova.
+
+ATTENZIONE: Assicurati di avere configurato il file `.env` nella root del progetto:
+
+```env
+ KEYSTORE_PATH=<keystore-path>
+ KEYSTORE_PASSWORD=<keystore-password>
+ KEY_ALIAS=<key-alias>
+ KEY_PASSWORD=<key-password>
+ XCODE_PATH=<xcode-custom-path(opzionale, default=/Applications/Xcode.app/Contents/MacOS/Xcode)>
+```
 
 ### 4. Lavorare normalmente
 
