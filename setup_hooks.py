@@ -2,7 +2,6 @@
 import subprocess
 import sys
 from pathlib import Path
-import sys
 
 # Ora il root è due livelli sopra: repo-cliente/
 ROOT = Path(__file__).resolve().parents[2]
