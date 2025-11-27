@@ -1,4 +1,4 @@
-# my-hooks — Hook Git personalizzati per Cordova
+# my-hooks-cordova — Hook Git personalizzati per Cordova
 
 Questo repository contiene un set di *git hooks* personalizzati e automatismi pensati per gestire release e build del progetto (version bump, build Android/iOS, controlli di coerenza, ecc.), senza sporcare il repository principale del cliente.
 
@@ -6,7 +6,7 @@ Questo repository contiene un set di *git hooks* personalizzati e automatismi pe
 
 ## 📂 Struttura
 
-- my-hooks/
+- my-hooks-cordova/
   - setup-hooks.py # script per attivare gli hook
   - disable-hooks.py # script per disattivare gli hook
   - pre-commit # wrapper pre-commit
@@ -48,17 +48,17 @@ cd <repo-cliente>
 ```bash
 mkdir -p tools
 cd tools
-git clone <url-del-repo-my-hooks> my-hooks
+git clone git@github.com:andrearossini-bf/git-hooks-cordova.git
 cd ..
 ```
 
 ### 3. Attivare gli hook
 
 ```bash
-python tools/my-hooks/setup_hooks.py
+python tools/my-hooks-cordova/setup_hooks.py
 ```
 
-A questo punto Git userà i file pre-commit / commit-msg contenuti in tools/my-hooks.
+A questo punto Git userà i file pre-commit / commit-msg contenuti in tools/my-hooks-cordova.
 
 ### 4. Lavorare normalmente
 
@@ -71,7 +71,7 @@ Ora ogni commit segue le regole definite:
 ### 5. Disattivare gli hook (se serve)
 
 ```bash
-python tools/my-hooks/disable_hooks.py
+python tools/my-hooks-cordova/disable_hooks.py
 ```
 
 ## ✅ Cosa cambia (e cosa no) per il cliente

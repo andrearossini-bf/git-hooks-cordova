@@ -6,7 +6,7 @@ import sys
 
 # Ora il root è due livelli sopra: repo-cliente/
 ROOT = Path(__file__).resolve().parents[2]
-HOOK_PATH = ROOT / "tools" / "my-hooks"
+HOOK_PATH = ROOT / "tools" / "my-hooks-cordova"
 
 def run(cmd, allow_fail=False):
     print(">", " ".join(cmd))
@@ -19,7 +19,7 @@ def main():
     print("🔧 Enabling local git hooks from:", HOOK_PATH)
 
     if not HOOK_PATH.exists():
-        print("✗ tools/my-hooks not found. Hai clonato il repo degli hook?")
+        print("✗ tools/my-hooks-cordova not found. Hai clonato il repo degli hook?")
         return 1
 
     print("🔧 Setting git core.hooksPath...")
