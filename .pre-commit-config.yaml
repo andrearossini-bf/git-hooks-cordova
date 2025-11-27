@@ -4,14 +4,14 @@ repos:
     hooks:
       - id: release-branch-version-files
         name: Enforce version files only on release/*
-        entry: scripts/check_release_branch_versions.py
+        entry: tools/git-hooks-cordova/scripts/check_release_branch_versions.py
         language: python
         pass_filenames: false
         stages: [pre-commit]
 
       - id: version-files-consistency
         name: Check versions consistency
-        entry: scripts/check_versions_consistency.py
+        entry: tools/git-hooks-cordova/scripts/check_versions_consistency.py
         language: python
         pass_filenames: false
         stages: [pre-commit]
@@ -19,14 +19,14 @@ repos:
 
       - id: commit-message-version
         name: Ensure commit message contains version
-        entry: scripts/check_commit_message_version.py
+        entry: tools/git-hooks-cordova/scripts/check_commit_message_version.py
         language: python
         stages: [commit-msg]
         pass_filenames: true
 
       - id: build-android-pre-commit
         name: Build Android before commit
-        entry: scripts/build_android.py
+        entry: tools/git-hooks-cordova/scripts/build_android.py
         language: python
         pass_filenames: false
         stages: [pre-commit]
@@ -34,7 +34,7 @@ repos:
 
       - id: build-ios-pre-commit
         name: Build iOS before commit (and open Xcode)
-        entry: scripts/build_ios.py
+        entry: tools/git-hooks-cordova/scripts/build_ios.py
         language: python
         pass_filenames: false
         stages: [pre-commit]
