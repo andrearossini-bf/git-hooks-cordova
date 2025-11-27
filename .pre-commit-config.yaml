@@ -1,0 +1,41 @@
+fail_fast: true # Stop on first failure
+repos:
+  - repo: local
+    hooks:
+      - id: release-branch-version-files
+        name: Enforce version files only on release/*
+        entry: scripts/check_release_branch_versions.py
+        language: python
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: version-files-consistency
+        name: Check versions consistency
+        entry: scripts/check_versions_consistency.py
+        language: python
+        pass_filenames: false
+        stages: [pre-commit]
+        files: ^(www/js/route\.js|config\.xml|CHANGELOG\.md)$
+
+      - id: commit-message-version
+        name: Ensure commit message contains version
+        entry: scripts/check_commit_message_version.py
+        language: python
+        stages: [commit-msg]
+        pass_filenames: true
+
+      - id: build-android-pre-commit
+        name: Build Android before commit
+        entry: scripts/build_android.py
+        language: python
+        pass_filenames: false
+        stages: [pre-commit]
+        files: ^(www/js/route\.js|config\.xml|CHANGELOG\.md)$
+
+      - id: build-ios-pre-commit
+        name: Build iOS before commit (and open Xcode)
+        entry: scripts/build_ios.py
+        language: python
+        pass_filenames: false
+        stages: [pre-commit]
+        files: ^(www/js/route\.js|config\.xml|CHANGELOG\.md)$
