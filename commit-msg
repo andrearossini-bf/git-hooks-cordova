@@ -1,3 +1,12 @@
-#!/bin/bash
-export PRE_COMMIT_CONFIG="$(dirname "$0")/.pre-commit-config.yaml"
-pre-commit run --hook-stage commit-msg --commit-msg-filename "$1"
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+HOOK_ROOT="$REPO_ROOT/tools/git-hooks-cordova"
+
+echo "[git-hooks-cordova] commit-msg hook"
+
+exec pre-commit run \
+  --config "$HOOK_ROOT/.pre-commit-config.yaml" \
+  --hook-stage commit-msg \
+  --commit-msg-filename "$1"
