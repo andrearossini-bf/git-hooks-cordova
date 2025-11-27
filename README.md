@@ -27,10 +27,10 @@ Questo repository contiene un set di *git hooks* personalizzati e automatismi pe
 
 Permettere di:
 
-- **gestire versioning, changelog e build in modo sicuro** (Android / iOS),  
-- **garantire coerenza** tra versione su codice, config, branch, changelog e commit message,  
-- far sì che la **repo del cliente rimanga pulita** — nessun file di configurazione commit-ato, nessuno script di build —  
-- avere un sistema **facile da attivare e disattivare** in locale.
+- **gestire versioning, changelog e build in modo sicuro** (Android / iOS)
+- **garantire coerenza** tra versione su codice, config, branch, changelog e commit message
+- far sì che la **repo del cliente rimanga pulita**: nessun file di configurazione committato, nessuno script di build
+- avere un sistema **facile da attivare e disattivare** in locale
 
 ---
 
@@ -79,11 +79,15 @@ Ora ogni commit segue le regole definite:
 python tools/git-hooks-cordova/disable_hooks.py
 ```
 
+---
+
 ## ✅ Cosa cambia (e cosa no) per il cliente
 
 - La repo del cliente non contiene .pre-commit-config.yaml, né script, né configurazioni di build.
 - Se il cliente non esegue i passi 2–3, non succede nulla: non interferisce.
 - Se invece li esegui, hai un tool locale a supporto di release/build senza impatto sul repo remoto.
+
+---
 
 ## 👷‍♂️ Policy / Convenzioni integrate
 
@@ -98,11 +102,15 @@ python tools/git-hooks-cordova/disable_hooks.py
 
 Questo sistema aiuta a mantenere coerenza e affidabilità sulla pipeline di rilascio.
 
+---
+
 ## 🔧 Personalizzazione & Estensioni
 
 - Puoi modificare gli script in scripts/ per adattarli ad altri flussi (ad esempio: aggiungere build web, test automatizzati, version bump semantico, versionCode, ecc.).
 - Puoi aggiungere altri wrapper (es. pre-push) per ulteriori controlli.
 - Tutto resta locale, e non impatta la repository del cliente.
+
+---
 
 ## 📄 Licenza / Note
 
