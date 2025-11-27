@@ -48,7 +48,7 @@ cd <repo-cliente>
 ```bash
 mkdir -p tools
 cd tools
-git clone git@github.com:andrearossini-bf/git-hooks-cordova.git
+git clone --depth=1 git@github.com:andrearossini-bf/git-hooks-cordova.git
 cd ..
 ```
 
