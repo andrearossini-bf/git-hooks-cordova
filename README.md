@@ -49,8 +49,13 @@ cd <repo-cliente>
 mkdir -p tools
 cd tools
 git clone --depth=1 git@github.com:andrearossini-bf/git-hooks-cordova.git
+rm -rf tools/git-hooks-cordova/.git
 cd ..
 ```
+
+ATTENZIONE: Assicurarsi che `tools/` sia inserito nel `.gitignore` se si vuole tenere questo strumento fuori dalla repository del cliente!
+
+Usare `rm -rf tools/git-hooks-cordova/.git` per non tracciare la repo di questo strumento.
 
 ### 3. Attivare gli hook
 
