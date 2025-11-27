@@ -4,25 +4,6 @@ Questo repository contiene un set di *git hooks* personalizzati e automatismi pe
 
 ---
 
-## 📂 Struttura
-
-- git-hooks-cordova/
-  - setup-hooks.py # script per attivare gli hook
-  - disable-hooks.py # script per disattivare gli hook
-  - pre-commit # wrapper pre-commit
-  - commit-msg # wrapper commit-msg
-  - .pre-commit-config.yaml # configurazione dei controlli
-  - scripts/ # script di controllo / build
-  - check_release_branch_versions.py
-  - check_versions_consistency.py
-  - build_android.py
-  - build_ios.py
-
-- I *wrapper* `pre-commit` / `commit-msg` fanno da ponte: lanciano i controlli definiti in `.pre-commit-config.yaml` e negli script quando si fanno commit, solo se gli hook sono attivati.  
-- Gli script in `scripts/` contengono la logica di validazione versione, build, coerenza changelog/branch/commit-message, ecc.
-
----
-
 ## 🎯 Obiettivo
 
 Permettere di:
@@ -34,7 +15,54 @@ Permettere di:
 
 ---
 
-## 🚀 Uso (per sviluppatore / te)
+## 🚀 Utilizzo degli hook
+
+### Qualsiasi branch
+
+- Bloccati i commit che includono modifiche alle **versioni** (`FCIC_CONFIG.VERSION` in `route.js`, attributo `version` in `config.xml`)
+- Bloccati i commit che toccano `CHANGELOG.md` al di fuori dei branch `release/*`
+- Su branch non di release puoi ancora modificare `route.js` / `config.xml`, ma **non** le righe di versione
+
+### Branch `release/*-<version>`
+
+Prima di ogni commit:
+
+- Controllata la coerenza delle versioni tra:
+  - `www/js/route.js`
+  - `config.xml`
+  - `CHANGELOG.md`
+  - nome del branch (`release/...<version>...`)
+  - messaggio di commit (deve contenere la versione)
+- Bloccato il commit se uno di questi elementi non contiene la **stessa versione**.
+
+### Branch `release/android-<version>`
+
+- Eseguita la build Android **prima del commit**:
+  - build `--debug` con `_versioneProduzione = false`
+  - build `--release` (APK + AAB) con `_versioneProduzione = true`
+- Se la build fallisce → **commit bloccato**
+- Nella cartella `builds/` vengono prodotti:
+  - `app-debug-test.<version>.apk`
+  - `app-release-prod.<version>.apk`
+  - `app-release-prod.<version>.aab`
+
+### Branch `release/ios-<version>`
+
+- Ricreata la piattaforma iOS (rimozione/aggiunta piattaforma Cordova)
+- Forzata la chiusura di Xcode (per evitare conflitti) e riaperto il workspace del progetto
+- Se qualcosa va storto (comandi Cordova, workspace mancante, Xcode non trovato) → **commit bloccato**
+
+### Requisiti / prerequisiti
+
+- Variabili d’ambiente o `.env` configurati per:
+  - `KEYSTORE_PATH`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD` (build Android)
+  - eventuale `XCODE_PATH` custom (se non si usa quello di default)
+- Gli hook girano **solo** se nel commit sono presenti i file di versione/changelog
+  (`www/js/route.js`, `config.xml`, `CHANGELOG.md`), per non rallentare i commit "normali".
+
+---
+
+## 🚀 Installazione degli hook
 
 ### 1. Clonare il repo del cliente
 
@@ -78,6 +106,25 @@ Ora ogni commit segue le regole definite:
 ```bash
 python tools/git-hooks-cordova/disable_hooks.py
 ```
+
+---
+
+## 📂 Struttura
+
+- git-hooks-cordova/
+  - setup-hooks.py # script per attivare gli hook
+  - disable-hooks.py # script per disattivare gli hook
+  - pre-commit # wrapper pre-commit
+  - commit-msg # wrapper commit-msg
+  - .pre-commit-config.yaml # configurazione dei controlli
+  - scripts/ # script di controllo / build
+  - check_release_branch_versions.py
+  - check_versions_consistency.py
+  - build_android.py
+  - build_ios.py
+
+- I *wrapper* `pre-commit` / `commit-msg` fanno da ponte: lanciano i controlli definiti in `.pre-commit-config.yaml` e negli script quando si fanno commit, solo se gli hook sono attivati.  
+- Gli script in `scripts/` contengono la logica di validazione versione, build, coerenza changelog/branch/commit-message, ecc.
 
 ---
 
