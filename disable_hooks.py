@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-HOOK_PATH = ROOT / "tools" / "my-hooks-cordova"
+HOOK_PATH = ROOT / "tools" / "git-hooks-cordova"
 
 def run(cmd):
     print(">", " ".join(cmd))
@@ -31,7 +31,7 @@ def main():
 
     if Path(current).resolve() != HOOK_PATH.resolve():
         print(f"⚠ core.hooksPath è impostato su: {current}")
-        print("  Non sembra essere il tuo tools/my-hooks-cordova. Non lo tocco.")
+        print("  Non sembra essere il tuo tools/git-hooks-cordova. Non lo tocco.")
         return 0
 
     # Rimuove l'impostazione
